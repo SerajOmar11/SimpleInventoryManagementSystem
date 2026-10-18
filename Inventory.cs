@@ -62,6 +62,19 @@ public class Inventory
             Console.WriteLine(exception.Message);
         }
     }
+
+    public void SearchProductName(){
+        try
+        {
+            string name=PromptName();
+            Product product=SearchProductByName(name);
+            Console.WriteLine($"Name: {product.Name} | Price: {product.Price} | Quantity: {product.Quantity}");
+        }
+        catch(ArgumentException exception)
+        {
+            Console.WriteLine(exception.Message);
+        }
+    }
     private string PromptName(int style=0)
     {
         Console.WriteLine($"Enter {(style==1?"new ":"")}Product name: ");
