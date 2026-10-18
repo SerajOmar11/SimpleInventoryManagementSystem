@@ -38,7 +38,7 @@ public class Inventory
     {
         try{
             string input=PromptName();
-            Product product=SearchProduct(input);
+            Product product=SearchProductByName(input);
 
             string newName=PromptName(1);
             decimal newPrice=PromptPrice(1);
@@ -100,7 +100,7 @@ public class Inventory
         return quantity;
     }
 
-    private Product SearchProduct(string name)
+    private Product SearchProductByName(string name)
     {
         Product? product=inventory.Find(p=>p.Name==name);
         if(product==null){
