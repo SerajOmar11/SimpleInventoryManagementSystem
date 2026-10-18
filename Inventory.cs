@@ -30,9 +30,29 @@ public class Inventory
             Console.WriteLine($"{num++}- Name: {product.Name} | Price: {product.Price} | Quantity: {product.Quantity} ");
         }
     }
-    private string PromptName()
+
+    public void EditProduct()
     {
-        Console.WriteLine("Enter Product name: ");
+        try{
+            string input=PromptName();
+            Product product=SearchProduct(input);
+
+            string newName=PromptName(1);
+            decimal newPrice=PromptPrice(1);
+            int newQuantity=PropmtQuantity(1);
+
+            product.Name=newName;
+            product.Price=newPrice;
+            product.Quantity=newQuantity;
+            Console.WriteLine("Product edited Successfully.\n");
+        }catch(ArgumentException exception){
+            Console.WriteLine(exception.Message);
+            return;
+        }
+    }
+    private string PromptName(int style=0)
+    {
+        Console.WriteLine($"Enter {(style==1?"new ":"")}Product name: ");
         string? input=Console.ReadLine()?.Trim();
 
         if (string.IsNullOrEmpty(input)){
@@ -41,9 +61,9 @@ public class Inventory
         return input;
     }
 
-    private decimal PromptPrice()
+    private decimal PromptPrice(int style=0)
     {
-        Console.WriteLine("Enter Product price: ");
+        Console.WriteLine($"Enter {(style==1?"new ":"")}Product price: ");
         string? input=Console.ReadLine()?.Trim();
 
         if(!decimal.TryParse(input,out decimal price)||price<0)
@@ -53,14 +73,23 @@ public class Inventory
         return price;
     }
 
-    private int PropmtQuantity()
+    private int PropmtQuantity(int style=0)
     {
-        Console.WriteLine("Enter Product quantity: ");
+        Console.WriteLine($"Enter {(style==1?"new ":"")}Product quantity: ");
         string? input=Console.ReadLine()?.Trim();
 
         if(!int.TryParse(input,out int quantity)||quantity<=0){
             throw new ArgumentException("Quantity should be a positive integer.\n");
         }
         return quantity;
+    }
+
+    private Product SearchProduct(string name)
+    {
+        Product? product=inventory.Find(p=>p.Name==name);
+        if(product==null){
+            throw new ArgumentException("Product is not in the inventory.\n");
+        }
+        return product;
     }
 }
