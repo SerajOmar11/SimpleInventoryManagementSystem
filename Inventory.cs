@@ -6,9 +6,12 @@ public class Inventory
     {
         Product newProduct=new Product();
         try{
+            Product newProduct=new Product();
             newProduct.Name=PromptName();
             newProduct.Price=PromptPrice();
             newProduct.Quantity=PropmtQuantity();
+            inventory.Add(newProduct);
+            Console.WriteLine("new Product added successfully.\n");
         }catch(ArgumentException exception){
             Console.WriteLine(exception.Message);
             return;
