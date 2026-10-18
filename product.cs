@@ -30,6 +30,7 @@ public class Product{
             if(value<=0){
                 throw new ArgumentException("Quantity should be a positive integer");
             }
+            quantity=value;
         }
     }
 }
