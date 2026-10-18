@@ -1,6 +1,6 @@
 public class Inventory
 {
-    List<Product> inventory=new List<Product>();
+    private List<Product> inventory=new List<Product>();
 
     public void AddProduct()
     {
@@ -15,6 +15,20 @@ public class Inventory
         }
         inventory.Add(newProduct);
         Console.WriteLine("new Product added successfully.\n");
+    }
+
+    public void ViewAllProducts()
+    {
+        if(inventory.Count==0){
+            Console.WriteLine("There are no products in the inventory.");
+            return;
+        }
+
+        int num=1;
+        foreach(var product in inventory)
+        {
+            Console.WriteLine($"{num++}- Name: {product.Name} | Price: {product.Price} | Quantity: {product.Quantity} ");
+        }
     }
     private string PromptName()
     {
