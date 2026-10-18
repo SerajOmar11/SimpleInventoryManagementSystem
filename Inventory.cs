@@ -7,6 +7,7 @@ public class Inventory
         try{
             Product newProduct=new Product();
             newProduct.Name=PromptName();
+            EnsureUniqueProductName(newProduct.Name);
             newProduct.Price=PromptPrice();
             newProduct.Quantity=PropmtQuantity();
             inventory.Add(newProduct);
@@ -38,6 +39,7 @@ public class Inventory
             Product product=SearchProductByName(input);
 
             string newName=PromptName(1);
+            EnsureUniqueProductName(newName, product);
             decimal newPrice=PromptPrice(1);
             int newQuantity=PropmtQuantity(1);
 
@@ -117,5 +119,13 @@ public class Inventory
             throw new ArgumentException("Product is not in the inventory.\n");
         }
         return product;
+    }
+
+    private void EnsureUniqueProductName(string name,Product? product=null)
+    {
+        if(inventory.Any(p =>p!=product && string.Equals(p.Name,name,StringComparison.OrdinalIgnoreCase)))
+        {
+            throw new ArgumentException("A product with this name already exists.\n");
+        }
     }
 }
