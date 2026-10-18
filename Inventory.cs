@@ -28,6 +28,7 @@ public class Inventory
         {
             Console.WriteLine($"{num++}- Name: {product.Name} | Price: {product.Price} | Quantity: {product.Quantity} ");
         }
+        Console.WriteLine();
     }
 
     public void EditProduct()
@@ -68,7 +69,7 @@ public class Inventory
         {
             string name=PromptName();
             Product product=SearchProductByName(name);
-            Console.WriteLine($"Name: {product.Name} | Price: {product.Price} | Quantity: {product.Quantity}");
+            Console.WriteLine($"Name: {product.Name} | Price: {product.Price} | Quantity: {product.Quantity}\n");
         }
         catch(ArgumentException exception)
         {
