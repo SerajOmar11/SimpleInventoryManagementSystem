@@ -4,7 +4,6 @@ public class Inventory
 
     public void AddProduct()
     {
-        Product newProduct=new Product();
         try{
             Product newProduct=new Product();
             newProduct.Name=PromptName();
@@ -14,10 +13,7 @@ public class Inventory
             Console.WriteLine("new Product added successfully.\n");
         }catch(ArgumentException exception){
             Console.WriteLine(exception.Message);
-            return;
         }
-        inventory.Add(newProduct);
-        Console.WriteLine("new Product added successfully.\n");
     }
 
     public void ViewAllProducts()
