@@ -50,7 +50,20 @@ public class Inventory
             Console.WriteLine("Product edited Successfully.\n");
         }catch(ArgumentException exception){
             Console.WriteLine(exception.Message);
-            return;
+        }
+    }
+
+    public void DeleteProduct()
+    {
+        try
+        {
+            string name=PromptName();
+            Product product=SearchProductByName(name);
+            inventory.Remove(product);
+            Console.WriteLine("Product Deleted successfully");
+        }catch(ArgumentException exception)
+        {
+            Console.WriteLine(exception.Message);
         }
     }
     private string PromptName(int style=0)
