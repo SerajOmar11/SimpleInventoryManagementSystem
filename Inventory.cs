@@ -38,10 +38,10 @@ public class Inventory
             string input=PromptName();
             Product product=SearchProductByName(input);
 
-            string newName=PromptName(1);
+            string newName=PromptName(1,product.Name);
             EnsureUniqueProductName(newName, product);
-            decimal newPrice=PromptPrice(1);
-            int newQuantity=PropmtQuantity(1);
+            decimal newPrice=PromptPrice(1,product.Price);
+            int newQuantity=PropmtQuantity(1,product.Quantity);
 
             product.Name=newName;
             product.Price=newPrice;
@@ -78,22 +78,28 @@ public class Inventory
             Console.WriteLine(exception.Message);
         }
     }
-    private string PromptName(int style=0)
+    private string PromptName(int style=0,string? curr=null)
     {
-        Console.WriteLine($"Enter {(style==1?"new ":"")}Product name: ");
+        Console.WriteLine($"Enter {(style==1?"new ":"")}Product name{(curr is null ? "":$" (press Enter to keep '{curr}')")}: ");
         string? input=Console.ReadLine()?.Trim();
 
         if (string.IsNullOrEmpty(input)){
+            if(curr is not null){
+                return curr;
+            }
             throw new ArgumentException("Product name cannot be empty.\n");
         }
         return input;
     }
 
-    private decimal PromptPrice(int style=0)
+    private decimal PromptPrice(int style=0,decimal? curr=null)
     {
-        Console.WriteLine($"Enter {(style==1?"new ":"")}Product price: ");
+        Console.WriteLine($"Enter {(style==1?"new ":"")}Product price{(curr is null ? "":$" (press Enter to keep {curr})")}: ");
         string? input=Console.ReadLine()?.Trim();
 
+        if(string.IsNullOrEmpty(input)&&curr is not null){
+            return curr.Value;
+        }
         if(!decimal.TryParse(input,out decimal price)||price<0)
         {
             throw new ArgumentException("Product price should be a non-negative number.\n");
@@ -101,11 +107,14 @@ public class Inventory
         return price;
     }
 
-    private int PropmtQuantity(int style=0)
+    private int PropmtQuantity(int style=0,int? curr=null)
     {
-        Console.WriteLine($"Enter {(style==1?"new ":"")}Product quantity: ");
+        Console.WriteLine($"Enter {(style==1?"new ":"")}Product quantity{(curr is null ? "":$" (press Enter to keep {curr})")}: ");
         string? input=Console.ReadLine()?.Trim();
 
+        if(string.IsNullOrEmpty(input)&&curr is not null){
+            return curr.Value;
+        }
         if(!int.TryParse(input,out int quantity)||quantity<=0){
             throw new ArgumentException("Quantity should be a positive integer.\n");
         }
